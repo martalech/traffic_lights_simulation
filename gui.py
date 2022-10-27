@@ -31,7 +31,7 @@ canvas = tk.Canvas(frame, width=750, height=600, borderwidth=0, highlightthickne
                    bg="white")
 canvas.pack()
 
-lights = [Light(canvas, 100, 200), Light(canvas, 200, 300), Light(canvas, 300, 400)]
+lights = [Light(canvas, 100, 200, "1"), Light(canvas, 200, 300, "2"), Light(canvas, 300, 400, "3")]
 
 # Add circles
 
@@ -43,8 +43,10 @@ people = [person1, person2]
 def move():
     for person in people:
         person.move()
+        for light in lights:
+            light.check_light(person)
 
-    window.after(33, move)
+    window.after(50, move)
 
 def helloCallBack():
     person1 = Person(canvas, 20)

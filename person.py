@@ -2,33 +2,46 @@ import random
 
 class Person():
 
-    def __init__(self, canvas, x, y, size, color='black'):
+    def __init__(self, canvas, size, color='black'):
         self.canvas = canvas
-        
-        self.x = x 
-        self.y = y
-        
-        self.start_x = x
-        self.start_y = y
+        self.rand = random.Random()
+
+        self.start_x = self.rand.randint(size, 750)
+        self.start_y = self.rand.randint(size, 600)
+
+        self.x = self.start_x  
+        self.y = self.start_y
         
         self.size = size
         self.color = color
+
+        self.move_x = self.rand.randint(-5, 6)
+        self.move_y = self.rand.randint(-5, 6)
         
         rect = [self.x, self.y, self.x+self.size, self.y+self.size]
         self.circle = canvas.create_oval(rect, outline=color, fill=color)
-        
+
     def move(self):
-        x_vel = random.randint(-5, 5)
-        y_vel = random.randint(-5, 5)
-    
-        self.canvas.move(self.circle, x_vel, y_vel)
+        self.canvas.move(self.circle, self.move_x, self.move_y)
         coordinates = self.canvas.coords(self.circle)
     
         self.x = coordinates[0]
         self.y = coordinates[1]
 
-        # if outside screen move to start position
-        if self.y < -self.size:
-            self.x = self.start_x
-            self.y = self.start_y
+        # if outside screen give a new direction
+        if self.y < 0:
+            self.move_y = 5
+            self.move_x = self.rand.randint(-5, 6)
+            self.canvas.coords(self.circle, self.x, self.y, self.x + self.size, self.y + self.size)
+        if self.x < 0:
+            self.move_x = 5
+            self.move_y = self.rand.randint(-5, 6)
+            self.canvas.coords(self.circle, self.x, self.y, self.x + self.size, self.y + self.size)
+        if self.x >= -self.size + self.canvas.winfo_width():
+            self.move_x = -5
+            self.move_y = self.rand.randint(-5, 6)
+            self.canvas.coords(self.circle, self.x, self.y, self.x + self.size, self.y + self.size)
+        if self.y >= self.canvas.winfo_height() - self.size:
+            self.move_y = -5
+            self.move_x = self.rand.randint(-5, 6)
             self.canvas.coords(self.circle, self.x, self.y, self.x + self.size, self.y + self.size)

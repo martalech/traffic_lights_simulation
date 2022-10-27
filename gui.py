@@ -1,6 +1,8 @@
 import tkinter as tk
 
+from tkinter.messagebox import Message
 from person import Person
+from light import Light
 
 # Create window
 
@@ -9,22 +11,48 @@ window.geometry("800x600")
 window.minsize(800, 600)
 window.maxsize(800, 600)
 
+frame = tk.Frame(
+            master=window,
+            relief=tk.RAISED,
+            borderwidth=1
+        )
+frame.grid(row=0, column=0)
+
+frame2 = tk.Frame(
+            master=window,
+            relief=tk.RAISED,
+            borderwidth=1
+        )
+frame2.grid(row=0, column=1)
+
 # Create background
 
-canvas = tk.Canvas(window, width=800, height=600, borderwidth=0, highlightthickness=0,
+canvas = tk.Canvas(frame, width=750, height=600, borderwidth=0, highlightthickness=0,
                    bg="white")
-canvas.grid(row=0, column=0, sticky='w')
+canvas.pack()
+
+lights = [Light(canvas, 100, 200), Light(canvas, 200, 300), Light(canvas, 300, 400)]
 
 # Add circles
+
 people = []
-person = Person(canvas, 20, 20, 20)
-people.append(person)
+person1 = Person(canvas, 20)
+person2 = Person(canvas, 20)
+people = [person1, person2]
 
 def move():
     for person in people:
         person.move()
 
     window.after(33, move)
+
+def helloCallBack():
+    person1 = Person(canvas, 20)
+    people.append(person1)
+
+B = tk.Button(frame2, text ="Add", command = helloCallBack)
+
+B.pack()
 
 move()
 

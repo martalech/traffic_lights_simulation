@@ -43,8 +43,8 @@ people = [person1, person2]
 def move():
     for person in people:
         person.move()
-        for light in lights:
-            light.check_light(person)
+    for light in lights:
+        light.check_light(people)
 
     window.after(50, move)
 

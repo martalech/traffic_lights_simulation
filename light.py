@@ -1,7 +1,5 @@
 import math
 
-from person import Person
-
 class Light():
 
     def __init__(self, canvas, x, y, light_number, color='yellow'):

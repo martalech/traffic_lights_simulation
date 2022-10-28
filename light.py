@@ -9,7 +9,7 @@ class Light():
 
         self.x = x  
         self.y = y
-        self.size = 120
+        self.size = 70
         self.canvas = canvas
         self.light_no = light_number
         
@@ -30,10 +30,8 @@ class Light():
                 turn_on = True
         if turn_on:
             self.turn_on_the_light()
-            print("turn on")
         else:
             self.turn_off_the_light()
-            print("turn off")
 
     def check_intersection(self, x1, y1, r1, x2, y2, r2):
         d = math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))

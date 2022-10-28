@@ -36,8 +36,8 @@ lights = [Light(canvas, 100, 200, "1"), Light(canvas, 200, 300, "2"), Light(canv
 # Add circles
 
 people = []
-person1 = Person(canvas, 20)
-person2 = Person(canvas, 20)
+person1 = Person(canvas, 10)
+person2 = Person(canvas, 10)
 people = [person1, person2]
 
 def move():
@@ -49,7 +49,7 @@ def move():
     window.after(50, move)
 
 def helloCallBack():
-    person1 = Person(canvas, 20)
+    person1 = Person(canvas, 10)
     people.append(person1)
 
 B = tk.Button(frame2, text ="Add", command = helloCallBack)

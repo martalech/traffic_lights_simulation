@@ -1,4 +1,4 @@
-from person import Person
+from ui_model.person import Person
 
 class Light():
 

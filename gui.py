@@ -1,8 +1,8 @@
 import tkinter as tk
 
 from tkinter.messagebox import Message
-from person import Person
-from light import Light
+from ui_model.person import Person
+from ui_model.light import Light
 
 # Create window
 

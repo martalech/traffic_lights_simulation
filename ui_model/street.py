@@ -9,3 +9,4 @@ class Street():
 
     def draw_street(self):
         self.rectangle = self.canvas.create_rectangle(self.start_point.x, self.start_point.y, self.end_point.x, self.end_point.y, fill='gray')
+        self.canvas.tag_lower(self.rectangle )

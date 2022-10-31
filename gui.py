@@ -5,6 +5,7 @@ from ui_model.person import Person
 from ui_model.light import Light
 from ui_model.street import Street
 from ui_model.point import Point
+from generators.street_generator import StreetGenerator
 
 # Create window
 
@@ -37,7 +38,7 @@ canvas.pack()
 lights = [Light(canvas, 100, 200, "1"), Light(canvas, 200, 300, "2"), Light(canvas, 300, 400, "3")]
 
 #Add streets
-streets = [Street(Point(0,0), Point(750, 50), canvas)]
+streets = [StreetGenerator.generate_horizontal_street(0,0,750, canvas), StreetGenerator.generate_vertical_street(0,0,600, canvas)]
 
 # Add circles
 

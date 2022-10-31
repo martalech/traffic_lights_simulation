@@ -43,20 +43,20 @@ streets = [StreetGenerator.generate_horizontal_street(0,0,750, canvas), StreetGe
 # Add circles
 
 people = []
-person1 = Person(canvas, 20)
-person2 = Person(canvas, 20)
+person1 = Person(canvas, 10)
+person2 = Person(canvas, 10)
 people = [person1, person2]
 
 def move():
     for person in people:
         person.move()
-        for light in lights:
-            light.check_light(person)
+    for light in lights:
+        light.check_light(people)
 
     window.after(50, move)
 
 def helloCallBack():
-    person1 = Person(canvas, 20)
+    person1 = Person(canvas, 10)
     people.append(person1)
 
 B = tk.Button(frame2, text ="Add", command = helloCallBack)

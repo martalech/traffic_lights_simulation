@@ -1,4 +1,5 @@
 from ui_model.person import Person
+import math
 
 class Light():
 
@@ -7,12 +8,13 @@ class Light():
 
         self.x = x  
         self.y = y
-        self.size = 120
+        self.size = 70
         self.canvas = canvas
         self.light_no = light_number
         
-        rect = [self.x, self.y, self.x+self.size, self.y+self.size]
+        rect = [self.x-self.size, self.y-self.size, self.x+self.size, self.y+self.size]
         self.circle = self.canvas.create_oval(rect, outline=color, fill=color, tags=self.light_no)
+        self.canvas.itemconfig(self.light_no, state="hidden")
 
     def turn_off_the_light(self):
         self.canvas.itemconfig(self.light_no, state="hidden")
@@ -20,9 +22,25 @@ class Light():
     def turn_on_the_light(self):
         self.canvas.itemconfig(self.light_no, state="normal")
 
-    def check_light(self, person):
-        if abs((person.x + person.size/2) - (self.x + self.size/2)) <= (self.size + person.size) /2 or \
-            abs((person.y + person.size/2)-(self.y+ self.size/2)) <= (self.size + person.size) /2:
+    def check_light(self, people):
+        turn_on = False
+        for person in people:
+            if self.check_intersection(person.x, person.y, person.size, self.x, self.y, self.size):
+                turn_on = True
+        if turn_on:
             self.turn_on_the_light()
         else:
             self.turn_off_the_light()
+
+    def check_intersection(self, x1, y1, r1, x2, y2, r2):
+        d = math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+        if(d <= r1 - r2):
+            return False
+        elif(d <= r2 - r1):
+            return True
+        elif(d < r1 + r2):
+            return True
+        elif(d == r1 + r2):
+            return True
+        else:
+            return False

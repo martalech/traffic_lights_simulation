@@ -22,8 +22,8 @@ class StreetMap():
             return False, None, None        
         if rect1.IsVertiacal:
             return self.check_if_rectangles_intersect(rect2, rect1)
-        if rect1.start_point.x <= rect1.end_point.x and rect1.end_point.x <= rect2.start_point.x:
-            if rect1.start_point.y <= rect2.end_point.y and rect1.end_point.y <= rect2.start_point.y:
+        if rect1.start_point.x <= rect2.end_point.x and rect1.end_point.x >= rect2.start_point.x:
+            if rect1.start_point.y <= rect2.end_point.y and rect1.end_point.y >= rect2.start_point.y:
                 return self.calculate_intersection(rect1, rect2)
         return False, None, None
 

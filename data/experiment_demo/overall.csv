@@ -1,0 +1,4 @@
+light_number,light_x,light_y,total_energy
+1,100,200,0
+2,200,300,10
+3,300,400,10

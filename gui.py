@@ -49,10 +49,10 @@ person2 = Person(canvas, 20)
 people = [person1, person2]
 
 def move():
+    for light in lights:
+        light.check_light(people)
     for person in people:
         person.move()
-        for light in lights:
-            light.check_light(person)
 
     window.after(50, move)
 

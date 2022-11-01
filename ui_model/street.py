@@ -15,6 +15,7 @@ class Street():
 
     def draw_street(self):
         self.rectangle = self.canvas.create_rectangle(self.start_point.x, self.start_point.y, self.end_point.x, self.end_point.y, fill='gray')
+        self.canvas.tag_lower(self.rectangle )
 
     def add_crossroad(self, crossRoad: CrossRoad):
         self.crossroads.append(crossRoad)
@@ -24,3 +25,4 @@ class Street():
             if c.isPointOnCrossRoad(p):
                 return True, c.crossed_street
         return False, None
+        

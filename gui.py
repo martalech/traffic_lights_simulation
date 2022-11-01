@@ -1,10 +1,9 @@
 import tkinter as tk
 
 from tkinter.messagebox import Message
+from street_models.street_map import StreetMap
 from ui_model.person import Person
 from ui_model.light import Light
-from ui_model.street import Street
-from ui_model.point import Point
 from generators.street_generator import StreetGenerator
 
 # Create window
@@ -38,7 +37,9 @@ canvas.pack()
 lights = [Light(canvas, 100, 200, "1"), Light(canvas, 200, 300, "2"), Light(canvas, 300, 400, "3")]
 
 #Add streets
-streets = [StreetGenerator.generate_horizontal_street(0,0,750, canvas), StreetGenerator.generate_vertical_street(0,0,600, canvas)]
+map = StreetMap()
+map.add_street(StreetGenerator.generate_horizontal_street(0,0,750, canvas))
+map.add_street(StreetGenerator.generate_vertical_street(0,0,600, canvas))
 
 # Add circles
 

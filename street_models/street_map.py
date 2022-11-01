@@ -35,9 +35,9 @@ class StreetMap():
         else:
             start_p.x = rect1.start_point.x
         if rect1.end_point.x < rect2.end_point.x:
-            end_p.x =  rect1.start_point.x
+            end_p.x =  rect1.end_point.x
         else:
-            end_p.x = rect2.start_point.x
+            end_p.x = rect2.end_point.x
         if rect1.start_point.y < rect2.start_point.y:
             start_p.y = rect2.start_point.y
         else:

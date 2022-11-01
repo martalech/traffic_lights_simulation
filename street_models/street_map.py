@@ -5,7 +5,6 @@ from ui_model.street import Street, CrossRoad
 class StreetMap():
     def __init__(self) -> None:
         self.streets = []
-        self.lights= []
 
     def add_street(self, new_street: Street):
         for s in self.streets:

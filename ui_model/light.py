@@ -1,36 +1,24 @@
 from ui_model.person import Person
 import math
+import uuid
 
 class Light():
 
-    def __init__(self, canvas, x, y, light_number, color='yellow'):
-        self.canvas = canvas
-
+    def __init__(self, x, y, color='yellow'):
         self.x = x  
         self.y = y
         self.size = 70
-        self.canvas = canvas
-        self.light_no = light_number
-        
-        rect = [self.x-self.size, self.y-self.size, self.x+self.size, self.y+self.size]
-        self.circle = self.canvas.create_oval(rect, outline=color, fill=color, tags=self.light_no)
-        self.canvas.itemconfig(self.light_no, state="hidden")
+        self.light_no = uuid.uuid4()
 
-    def turn_off_the_light(self):
-        self.canvas.itemconfig(self.light_no, state="hidden")
-
-    def turn_on_the_light(self):
-        self.canvas.itemconfig(self.light_no, state="normal")
-
-    def check_light(self, people):
+    def should_turn_on_the_light(self, people):
         turn_on = False
         for person in people:
             if self.check_intersection(person.x, person.y, person.size, self.x, self.y, self.size):
                 turn_on = True
         if turn_on:
-            self.turn_on_the_light()
+            return True
         else:
-            self.turn_off_the_light()
+            return False
 
     def check_intersection(self, x1, y1, r1, x2, y2, r2):
         d = math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))

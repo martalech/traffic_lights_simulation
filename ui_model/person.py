@@ -2,8 +2,7 @@ import random
 
 class Person():
 
-    def __init__(self, canvas, size, color='black'):
-        self.canvas = canvas
+    def __init__(self, size, color='black'):
         self.rand = random.Random()
 
         self.x = self.rand.randint(size, 750) 
@@ -14,13 +13,9 @@ class Person():
 
         self.move_x = self.rand.randint(-5, 6)
         self.move_y = self.rand.randint(-5, 6)
-        
-        rect = [self.x-self.size, self.y-self.size, self.x+self.size, self.y+self.size]
-        self.circle = canvas.create_oval(rect, outline=color, fill=color)
+        self.circle = None
 
-    def move(self):
-        self.canvas.move(self.circle, self.move_x, self.move_y)
-    
+    def move(self, canvas_width, canvas_heigh):
         self.x = self.x + self.move_x
         self.y = self.y + self.move_y
 
@@ -31,9 +26,9 @@ class Person():
         if self.x < self.size:
             self.move_x = 5
             self.move_y = self.rand.randint(-5, 6)
-        if self.x >= -self.size + self.canvas.winfo_width():
+        if self.x >= -self.size + canvas_width:
             self.move_x = -5
             self.move_y = self.rand.randint(-5, 6)
-        if self.y >= self.canvas.winfo_height() - self.size:
+        if self.y >= canvas_heigh - self.size:
             self.move_y = -5
             self.move_x = self.rand.randint(-5, 6)

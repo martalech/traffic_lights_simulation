@@ -19,4 +19,10 @@ class Street():
             if c.isPointOnCrossRoad(p):
                 return True, c.crossed_street
         return False, None
+
+    def isPointInCrossrRoad(self, p: Point, offset: int):
+        for c in self.crossroads:
+            if c.isPointOnCrossRoad(p, offset):
+                return True, c.crossed_street
+        return False, None
         

@@ -72,7 +72,7 @@ class DrawOnCanvas:
 
     def move_people(self):
         for person in self.people:
-            person.move(self.canvas.winfo_width(),self.canvas.winfo_height())
+            person.move(self.canvas.winfo_width(), self.canvas.winfo_height())
             self.canvas.move(person.circle, person.move_x, person.move_y)
     
     def remove_strets(self):

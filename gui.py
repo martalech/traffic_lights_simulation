@@ -1,6 +1,9 @@
 import tkinter as tk
+import random
 
 from tkinter.messagebox import Message
+
+
 from draw_on_canvas.draw_on_canvas import DrawOnCanvas
 from street_models.street_map import StreetMap
 from ui_model.person import Person
@@ -37,31 +40,20 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas)
-
-#Add streets
-map = StreetMap()
-
-# draw gui
-draw_gui.add_streets(map)
-
-# Add circles
-people = []
-person1 = Person(20)
-person2 = Person(20)
-people = [person1, person2]
-draw_gui.add_people(people)
-draw_gui.draw_initial()
+parse_scenario("./example_scenarios/scenario1.txt", draw_gui)
 
 def move():
     draw_gui.draw_people_moving()
     window.after(50, move)
+    return
 
-def helloCallBack():
-    person1 = Person(20)
+def add_person():
+    point, street = draw_gui.streetmap.find_spawning_spot()
+    person1 = Person(20,  point, street) #TODO : Do not refer to gui static'ish way
     draw_gui.add_person(person1)
     draw_gui.draw_person(person1)
 
-B = tk.Button(frame2, text ="Add", command = helloCallBack)
+B = tk.Button(frame2, text ="Add", command = add_person)
 
 B.pack()
 

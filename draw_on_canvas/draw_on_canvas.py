@@ -10,6 +10,8 @@ class DrawOnCanvas:
         self.streetmap = None
         self.lights= []
         self.people = []
+        self.rectangles = []
+        self.circles = []
 
     def draw_initial(self):
         self.draw_streets()
@@ -34,6 +36,7 @@ class DrawOnCanvas:
         for s in self.streetmap.streets:
             rectangle = self.canvas.create_rectangle(s.start_point.x, s.start_point.y, s.end_point.x, s.end_point.y, fill='gray', outline="gray")
             self.canvas.tag_lower(rectangle)
+            self.rectangles.append(rectangle)
 
     # light
     def add_lights(self, lights: List[Light]):
@@ -44,6 +47,7 @@ class DrawOnCanvas:
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             circle = self.canvas.create_oval(rect, outline="yellow", fill="yellow", tags=l.light_no)
             self.canvas.itemconfig(l.light_no, state="hidden")
+            self.circles.append(circle)
     
     def turn_off_the_light(self, light):
         self.canvas.itemconfig(light.light_no, state="hidden")
@@ -71,3 +75,12 @@ class DrawOnCanvas:
             person.move(self.canvas.winfo_width(),self.canvas.winfo_height())
             self.canvas.move(person.circle, person.move_x, person.move_y)
     
+    def remove_strets(self):
+        for rectangle in self.rectangles:
+            self.canvas.delete(rectangle)
+        self.rectangles = []
+    
+    def remove_lights(self):
+        for circle in self.circles:
+            self.canvas.delete(circle)
+        self.circles = []

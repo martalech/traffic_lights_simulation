@@ -47,3 +47,4 @@ class StreetMap():
             end_p.y = rect2.end_point.y
         
         return True, start_p, end_p
+    

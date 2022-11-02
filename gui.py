@@ -6,6 +6,8 @@ from street_models.street_map import StreetMap
 from ui_model.person import Person
 from ui_model.light import Light
 from generators.street_generator import StreetGenerator
+from tkinter import filedialog as fd
+from configuration_parser.parser import parse_scenario
 
 # Create window
 
@@ -30,19 +32,14 @@ frame2.grid(row=0, column=1)
 
 # Create background
 
-canvas = tk.Canvas(frame, width=750, height=600, borderwidth=0, highlightthickness=0,
+canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickness=0,
                    bg="white")
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas)
 
-# Add lights
-draw_gui.add_lights([Light(100, 200), Light(200, 300), Light(300, 400)])
-
 #Add streets
 map = StreetMap()
-map.add_street(StreetGenerator.generate_horizontal_street(0,0,750))
-map.add_street(StreetGenerator.generate_vertical_street(0,0,600))
 
 # draw gui
 draw_gui.add_streets(map)
@@ -67,6 +64,31 @@ def helloCallBack():
 B = tk.Button(frame2, text ="Add", command = helloCallBack)
 
 B.pack()
+
+def select_file():
+    filetypes = [('text files', '*.txt')]
+
+    filename = fd.askopenfilename(
+        title='Open a file',
+        initialdir='/',
+        filetypes=filetypes)
+    parse_scenario(filename, draw_gui)
+    if filename is not None:
+        try:
+            parse_scenario(filename, draw_gui)
+        except Exception:
+            tk.messagebox.showerror(title='Error', message='Invalid scenario file format')
+
+    print('Opened ', filename)
+
+# open button
+open_button = tk.Button(
+    frame2,
+    text='Open scenario',
+    command=select_file
+)
+
+open_button.pack(expand=True)
 
 move()
 

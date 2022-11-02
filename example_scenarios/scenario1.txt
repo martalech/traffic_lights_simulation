@@ -1,0 +1,5 @@
+street:0,0,700,horizontal
+street:0,0,600,vertical
+light:110,110
+light:110,400
+light:350,110

@@ -1,3 +1,4 @@
+from time import gmtime
 from typing import List
 from street_models.street_map import StreetMap
 from ui_model.light import Light
@@ -5,6 +6,8 @@ from ui_model.light import Light
 
 
 class DrawOnCanvas:
+
+    total_light_time = 0
     def __init__(self, canvas) -> None:
         self.canvas = canvas
         self.streetmap = None
@@ -19,14 +22,19 @@ class DrawOnCanvas:
         self.draw_people()
 
     def draw_people_moving(self):
+        self.total_light_time = 0
         self.move_people()
-
         for light in self.lights:
             if light.should_turn_on_the_light(self.people):
                 self.turn_on_the_light(light)
             else:
                 self.turn_off_the_light(light)
 
+        for light in self.lights:
+            self.total_light_time += light.light_time
+
+        # print("Total light time: " + str((self.total_light_time * 10)) + " seconds")
+        print("Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours")
 
     # Street
     def add_streets(self, streetmap: StreetMap):

@@ -1,4 +1,4 @@
-from light import Light
+from ui_model.light import Light
 import math
 import sys
 import os
@@ -23,8 +23,8 @@ for light in power_lights:
 
 class Power_Light(Light):
 
-    def __init__(self,canvas, x, y, light_number, color='yellow'):
-        super(Power_Light,self).__init__(canvas, x, y, light_number, color='yellow')
+    def __init__(self, x, y, color='yellow'):
+        super(Power_Light,self).__init__(x, y, color='yellow')
         self.power = 0
         self.current_energy = []
         self.accumulated_energy = []    
@@ -43,15 +43,12 @@ class Power_Light(Light):
         if nearest_person_distance <= self.size: 
             # the nearest person is within current light bulb
             self.power = 2
-            self.turn_on_the_light()
         elif self.size < nearest_person_distance <= 3*self.size:
             # the nearest person is in the neighbor light bulb
             self.power = 1
-            self.turn_on_the_light()
         else: 
             # the nearest person is out of activated area
             self.power = 0
-            self.turn_off_the_light()
 
     def calculate_energy(self):
         self.current_energy.append(self.power)

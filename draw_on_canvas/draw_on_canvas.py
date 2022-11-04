@@ -2,20 +2,21 @@ from time import gmtime
 from typing import List
 from street_models.street_map import StreetMap
 from ui_model.light import Light
-
-
+from PIL import Image, ImageDraw, ImageTk
 
 class DrawOnCanvas:
 
     total_light_time = 0
     temp_string = None
-    def __init__(self, canvas) -> None:
+    def __init__(self, canvas, window) -> None:
         self.canvas = canvas
         self.streetmap = None
         self.lights= []
         self.people = []
         self.rectangles = []
         self.circles = []
+        self.window = window
+        self.images = []
 
     def draw_initial(self):
         self.draw_streets()
@@ -25,11 +26,6 @@ class DrawOnCanvas:
     def draw_people_moving(self):
         self.total_light_time = 0
         self.move_people()
-        for light in self.lights:
-            if light.should_turn_on_the_light(self.people):
-                self.turn_on_the_light(light)
-            else:
-                self.turn_off_the_light(light)
 
         for light in self.lights:
             self.total_light_time += light.light_time
@@ -55,11 +51,42 @@ class DrawOnCanvas:
         self.lights = lights
 
     def draw_lights(self):
-        for l in self.lights:
+        for i, l in enumerate(self.lights):
+            l.adjust_light(self.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
-            circle = self.canvas.create_oval(rect, outline="yellow", fill="yellow", tags=l.light_no)
-            self.canvas.itemconfig(l.light_no, state="hidden")
+            
+            alpha = int(l.power / 2 * 255)
+            fill = self.window.winfo_rgb("yellow") + (alpha,)
+            image = Image.new('RGBA', (700, 600))
+            ImageDraw.Draw(image).ellipse(rect, fill=fill)
+            tk_image = ImageTk.PhotoImage(image)
+            self.images.append(tk_image)
+
+            circle = self.canvas.create_image(0, 0, image=tk_image, anchor='nw', tags=l.light_no)
             self.circles.append(circle)
+
+            if l.power == 0:
+                self.turn_off_the_light(l)
+            else:
+                self.turn_on_the_light(l)
+
+    def update_lights(self):
+        for i, l in enumerate(self.lights):
+            l.adjust_light(self.people)
+            rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
+            
+            alpha = int(l.power / 2 * 255)
+            fill = self.window.winfo_rgb("yellow") + (alpha,)
+            image = Image.new('RGBA', (700, 600))
+            ImageDraw.Draw(image).ellipse(rect, fill=fill)
+            self.images[i] = ImageTk.PhotoImage(image)
+
+            self.canvas.itemconfig(l.light_no, image=self.images[i])
+
+            if l.power == 0:
+                self.turn_off_the_light(l)
+            else:
+                self.turn_on_the_light(l)
     
     def turn_off_the_light(self, light):
         self.canvas.itemconfig(light.light_no, state="hidden")
@@ -96,3 +123,4 @@ class DrawOnCanvas:
         for circle in self.circles:
             self.canvas.delete(circle)
         self.circles = []
+        self.images = []

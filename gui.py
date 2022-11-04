@@ -39,11 +39,12 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
                    bg="white")
 canvas.pack()
 
-draw_gui = DrawOnCanvas(canvas)
+draw_gui = DrawOnCanvas(canvas, window)
 parse_scenario("./example_scenarios/scenario1.txt", draw_gui)
 
 def move():
     draw_gui.draw_people_moving()
+    draw_gui.update_lights()
     window.after(50, move)
     return
 

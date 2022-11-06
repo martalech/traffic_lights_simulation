@@ -1,6 +1,6 @@
 from generators.street_generator import StreetGenerator
 from street_models.street_map import StreetMap
-from ui_model.light import Light
+from ui_model.power_light import Power_Light
 
 def parse_street(values, new_map):
     start_x = int(values[0])
@@ -16,7 +16,7 @@ def parse_street(values, new_map):
 def parse_light(values, new_lights):
     x = int(values[0])
     y = int(values[1])
-    new_lights.append(Light(x, y))
+    new_lights.append(Power_Light(x, y))
 
 def parse_setting(setting, new_map, new_lights):
     if setting[0] == "street":

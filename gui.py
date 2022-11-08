@@ -40,23 +40,12 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas, window)
-parse_scenario("./example_scenarios/scenario1.txt", draw_gui)
+parse_scenario("./example_scenarios/scenario3.txt", draw_gui)
 
 def move():
-    draw_gui.draw_people_moving()
-    draw_gui.update_lights()
+    draw_gui.tick()
     window.after(50, move)
     return
-
-def add_person():
-    point, street = draw_gui.streetmap.find_spawning_spot()
-    person1 = Person(20,  point, street) #TODO : Do not refer to gui static'ish way
-    draw_gui.add_person(person1)
-    draw_gui.draw_person(person1)
-
-B = tk.Button(frame2, text ="Add", command = add_person)
-
-B.pack()
 
 def select_file():
     filetypes = [('text files', '*.txt')]

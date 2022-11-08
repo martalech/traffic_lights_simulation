@@ -6,7 +6,7 @@ from ui_model.street import Street
 
 class Person():
 
-    def __init__(self, size, point: Point, street: Street, color='black'):
+    def __init__(self, size, point: Point, street: Street, speed = None, color='black'):
         self.rand = random.Random()
 
         self.edge_offset = 0  # So that people do not walk next to the edge of the street
@@ -17,7 +17,7 @@ class Person():
 
         self.size = size
         self.color = color
-        self.speed = self.rand.randint(-5, 6)
+        self.speed = speed if speed is not None else self.rand.randint(-5, 6)
 
         self.move_x = self.speed if street.IsHorizontal else 0
         self.move_y = self.speed if street.IsVertiacal else 0

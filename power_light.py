@@ -32,6 +32,11 @@ class Power_Light(Light):
     def __check_distance(self, x1, y1, x2, y2):
         # return distance between current light bulb and a person
         return math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
+    
+    
+    def get_intensity(self,x1,x2,y1,y2):
+        #打算用来计算光强
+        pass
 
     def adjust_light(self, people):
         # get the distance of the nearest person

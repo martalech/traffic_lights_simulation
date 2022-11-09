@@ -22,6 +22,7 @@ class Person():
         self.move_x = self.speed if street.IsHorizontal else 0
         self.move_y = self.speed if street.IsVertiacal else 0
         self.circle = None
+        self.anxiety_level = 0
 
     def move(self, canvas_width, canvas_heigh):
         entered_crossroad, crossing_road = self.street.isPointInCrossrRoad(Point(self.x, self.y),
@@ -60,3 +61,6 @@ class Person():
             else:
                 raise Exception("Person movement is STALE")
         # stay on the current road
+
+    def calculate_anxiety(self, lights):
+        return 0 # TODO implement it

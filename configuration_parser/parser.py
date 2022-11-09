@@ -48,14 +48,8 @@ def parse_setting(setting, new_map, new_lights):
         raise Exception()
 
 
-def parse_scenario(filename, draw_gui):
-    new_map = StreetMap()
-    new_lights = []
-    with open(filename) as file:
-        for line in file.readlines():
-            setting = line.split(':')
-            parse_setting(setting, new_map, new_lights)
-
+def parse_scenario_to_draw_gui(filename, draw_gui):
+    new_map, new_lights = parse_scenario(filename)
     draw_gui.remove_strets()
     draw_gui.remove_lights()
     draw_gui.add_streets(new_map)
@@ -63,3 +57,14 @@ def parse_scenario(filename, draw_gui):
     draw_gui.draw_streets()
     draw_gui.draw_lights()
     draw_gui.draw_people()
+
+def parse_scenario(filename) -> tuple[StreetMap, list[Power_Light]]:
+    new_map = StreetMap()
+    new_lights = []
+    with open(filename) as file:
+        for line in file.readlines():
+            setting = line.split(':')
+            parse_setting(setting, new_map, new_lights)
+    
+    return new_map, new_lights
+

@@ -14,23 +14,11 @@ class Light():
         self.y = y
         self.size = 70
         self.light_no = uuid.uuid4()
-        self.light_time = 0
-
-    def should_turn_on_the_light(self, people):
-        turn_on = False
-        for person in people:
-            if self.check_intersection(person.x, person.y, person.size, self.x, self.y, self.size):
-                turn_on = True
-        if turn_on:
-            self.temp_light_start = datetime.now()
-            return True
-        else:
-            if self.temp_light_start is not None:
-                self.temp_light_end = datetime.now()
-                self.light_time += self.temp_light_end.timestamp() - self.temp_light_start.timestamp()
-                self.temp_light_start = None
-                self.temp_light_end = None
-            return False
+        # i think we dont need this
+        # self.light_time = 0
+        # self.is_turn_on = False
+        # self.temp_light_start = None
+        # self.temp_light_end = None
 
     def check_intersection(self, x1, y1, r1, x2, y2, r2):
         d = math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))

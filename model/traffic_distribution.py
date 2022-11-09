@@ -4,9 +4,9 @@ class TrafficDistribution:
         # E.g. at 6pm, there is traffic intensity of 9 (0-10) scale
         self.distribution = {
             18: 9,
-            19: 1, # change to 10
+            19: 10, # change to 10
             20: 10,
-            21: 1, # change to 9
+            21: 9, # change to 9
             22: 8,
             23: 7,
             0: 9,

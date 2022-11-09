@@ -1,16 +1,8 @@
 import tkinter as tk
-import random
-
-from tkinter.messagebox import Message
-
 
 from draw_on_canvas.draw_on_canvas import DrawOnCanvas
-from street_models.street_map import StreetMap
-from ui_model.person import Person
-from ui_model.light import Light
-from generators.street_generator import StreetGenerator
 from tkinter import filedialog as fd
-from configuration_parser.parser import parse_scenario
+from configuration_parser.parser import parse_scenario_to_draw_gui
 
 # Create window
 
@@ -40,7 +32,7 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas, window)
-parse_scenario("./example_scenarios/scenario3.txt", draw_gui)
+parse_scenario_to_draw_gui("./example_scenarios/scenario3.txt", draw_gui)
 
 def move():
     draw_gui.tick()
@@ -54,10 +46,10 @@ def select_file():
         title='Open a file',
         initialdir='/',
         filetypes=filetypes)
-    parse_scenario(filename, draw_gui)
+    parse_scenario_to_draw_gui(filename, draw_gui)
     if filename is not None:
         try:
-            parse_scenario(filename, draw_gui)
+            parse_scenario_to_draw_gui(filename, draw_gui)
         except Exception:
             tk.messagebox.showerror(title='Error', message='Invalid scenario file format')
 

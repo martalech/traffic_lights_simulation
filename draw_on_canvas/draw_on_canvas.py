@@ -8,8 +8,8 @@ from PIL import Image, ImageDraw, ImageTk
 
 class DrawOnCanvas:
 
-    total_light_time = 0
-    temp_string = None
+    # total_light_time = 0
+    # temp_string = None
     def __init__(self, canvas, window) -> None:
         self.canvas = canvas
         self.streetmap: StreetMap = None
@@ -36,16 +36,16 @@ class DrawOnCanvas:
         self.update_lights()
 
     def draw_people_moving(self):
-        self.total_light_time = 0
+        # self.total_light_time = 0
         self.move_people()
 
-        for light in self.lights:
-            self.total_light_time += light.light_time
+        # for light in self.lights:
+        #     self.total_light_time += light.light_time
         # print("Total light time: " + str((self.total_light_time * 10)) + " seconds")
-        if "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"\
-                != self.temp_string and not None:
-            self.temp_string = "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"
-            print("Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours")
+        # if "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"\
+        #         != self.temp_string and not None:
+        #     self.temp_string = "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"
+        #     print("Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours")
 
     # Street
     def add_streets(self, streetmap: StreetMap):

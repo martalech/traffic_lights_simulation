@@ -11,9 +11,29 @@ import numpy as np
 #4. 基于人还是基于灯？？？？？？？？返回这么多人的光强判定有意义吗？？？？
 
 #Q:是否有必要新建一个类？？？？？？？？？？？？参数获取似乎重合？
-#天晚矣，明日再战ZZZ
 
 class Intensity():
 
     def __init__(self):
+        pass
+    
+    def get_position():
+        
+        pass
+    
+    
+    def get_light():
+        
+        
+        pass
+    
+    def get_distance():
+        pass
+    
+    def caculate_intensity():
+        pass
+        
+    
+        
+        
         

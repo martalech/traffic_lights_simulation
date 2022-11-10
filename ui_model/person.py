@@ -4,6 +4,8 @@ from ui_model.point import Point
 from ui_model.street import Street
 
 
+
+
 class Person():
 
     def __init__(self, size, point: Point, street: Street, speed = None, color='black'):
@@ -63,4 +65,9 @@ class Person():
         # stay on the current road
 
     def calculate_anxiety(self, lights):
+        # Very basic anxiety calculation is a linear inverse relationship with light-level at a given point.
+        # If light level is 100%, then anxiety is 0%, if light-level is 47%, then anxiety is 53%, etc.
+
+        #return 100 - get_light_level(self.x, self.y)
+
         return 0 # TODO implement it

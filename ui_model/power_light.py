@@ -3,7 +3,6 @@ import math
 import sys
 import os
 import pandas as pd
-import datetime
 
 
 '''
@@ -29,12 +28,17 @@ class Power_Light(Light):
         self.power = 0
         self.current_energy = []
         self.accumulated_energy = []    
+        self.ratio = 0.1 # ratio of intelligent part power and light power 
 
     def __check_distance(self, x1, y1, x2, y2):
         # return distance between current light bulb and a person
         return math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
 
     def adjust_light(self, people):
+
+        light_power_max = 100
+        intelligent_power = light_power_max*self.ratio
+
         # get the distance of the nearest person
         nearest_person_distance = sys.maxsize
         for person in people:
@@ -43,13 +47,16 @@ class Power_Light(Light):
         # adjust light based on the distance of the nearest person
         if nearest_person_distance <= self.size: 
             # the nearest person is within current light bulb
-            self.power = 2
+            self.power = light_power_max*0.9+intelligent_power
         elif self.size < nearest_person_distance <= 3*self.size:
-            # the nearest person is in the neighbor light bulb
-            self.power = 1
+            # the nearest person is in the first neighbor light bulb
+            self.power = light_power_max*0.6+intelligent_power
+        elif 3*self.size < nearest_person_distance <= 5*self.size:
+            # the nearest person is in the second neighbor light bulb
+            self.power = light_power_max*0.3+intelligent_power
         else: 
             # the nearest person is out of activated area
-            self.power = 0
+            self.power = light_power_max*0.1+intelligent_power
 
     def calculate_energy(self):
         self.current_energy.append(self.power)
@@ -60,9 +67,9 @@ class Power_Light(Light):
         # dir = "./data/experiment_0"
         if not os.path.exists(dir):
             os.makedirs(dir)
-            df1 = pd.DataFrame(data={self.light_no+"_current_energy":self.current_energy})
-            df2 = pd.DataFrame(data={self.light_no+"_accumulated_energy":self.accumulated_energy})
-            df3 = pd.DataFrame(data={"light_number":self.light_no,
+            df1 = pd.DataFrame(data={str(self.x)+'_'+str(self.y)+"_current_energy":self.current_energy})
+            df2 = pd.DataFrame(data={str(self.x)+'_'+str(self.y)+"_accumulated_energy":self.accumulated_energy})
+            df3 = pd.DataFrame(data={
                                     "light_x":self.x,
                                     "light_y":self.y,
                                     "total_energy":self.accumulated_energy[-1]},index=[0])
@@ -71,13 +78,13 @@ class Power_Light(Light):
             df3.to_csv(dir+"/overall.csv",index=False)
         else:
             df1 = pd.read_csv(dir+"/current_energy.csv")
-            df1[self.light_no+"_current_energy"] = self.current_energy
+            df1[str(self.x)+'_'+str(self.y)+"_current_energy"] = self.current_energy
 
             df2 = pd.read_csv(dir+"/accumulated_energy.csv")
-            df2[self.light_no+"_accumulated_energy"] = self.accumulated_energy
+            df2[str(self.x)+'_'+str(self.y)+"_accumulated_energy"] = self.accumulated_energy
             
             df3 = pd.read_csv(dir+"/overall.csv")
-            new_row = pd.DataFrame({"light_number":self.light_no,
+            new_row = pd.DataFrame({
                     "light_x":self.x,
                     "light_y":self.y,
                     "total_energy":self.accumulated_energy[-1]},index=[0])

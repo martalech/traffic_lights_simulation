@@ -1,6 +1,10 @@
 from configuration_parser.parser import parse_scenario
 from generators.people_generator import PeopleGenerator
 from model.time import Time
+import os
+import datetime
+
+
 
 def simulate(people_number, scenario_file_name):
     time = Time()
@@ -29,6 +33,7 @@ def simulate(people_number, scenario_file_name):
             # gather the data for power:
             for l in lights:
                 l.adjust_light(street_map.people)
+                l.calculate_energy()
                 energy.append(l.power) # TODO: here multiply by some value for power depending on dimming...
             # gather data for anxiety:
             for p in street_map.people:
@@ -39,6 +44,17 @@ def simulate(people_number, scenario_file_name):
         # handle last hour
         power_consumptions.append(sum(energy))
         anxiety.append(sum(current_anxiety)/len(current_anxiety))  
+
+    # output result to data folder
+    # default directory name = scenario name + power ratio + time
+    dir = "./data/" + scenario_file_name.split("/")[-1].split(".")[0] +'_'+str(lights[0].ratio)
+    time_now  = datetime.datetime.now().strftime('_%Y%m%d_%H%M%S') 
+    dir = dir + time_now
+    if os.path.exists(dir):
+        raise FileExistsError
+    else:
+        for light in lights:
+            light.output_data(dir)
 
     return power_consumptions, anxiety
 

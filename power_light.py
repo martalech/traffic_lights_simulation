@@ -19,7 +19,9 @@ for light in power_lights:
     dir = "./data/experiment_0"
     light.output_data(dir)
 '''
-
+#we assume the light is HPS(高压钠灯,high voltage sodium lamp)
+#we set the rated power is 150 w（光效為72～130帕流/瓦）
+#CIE requires that the minimum value of street light intensity shouldn’t  be less than 20lux.
 
 class Power_Light(Light):
 
@@ -34,8 +36,9 @@ class Power_Light(Light):
         return math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
     
     
-    def get_intensity(self,x1,x2,y1,y2):
-        #打算用来计算光强
+    def get_intensity(self):
+        #打算用来计算光强    
+        
         pass
 
     def adjust_light(self, people):

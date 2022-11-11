@@ -8,12 +8,12 @@ if you want to use the function "get_intensity", you need to offer the lights' c
 class Intensity:
     
     def __init__(self, x, y,L1,L2):
-        #the unit of the hight is cm.
+        #the unit is mm.
         self.light_hight = 3000
-        self.person_hight = 180
+        self.person_hight = 1800
         self.x = x
         self.y = y
-        self.threshold = 20 # 
+        self.threshold = 20 #lux
         
         #L1 is the Intensity of the first light
         #L2 is the Intensity of the second one.
@@ -21,9 +21,9 @@ class Intensity:
         self.L2 = L2
         
         #redius is the range that each lamp can illuminate（circle）
-        self.redius = 700
+        self.redius = 2000
         #redius_Insection is the intersection part
-        self.redius_insection = 200
+        self.redius_insection = 500
         self.light_intensity = 0
         
     def get_intensity(self, x1,y1,x2,y2):

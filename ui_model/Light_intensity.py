@@ -8,7 +8,7 @@ if you want to use the function "get_intensity", you need to offer the lights' c
 class Intensity:
     
     def __init__(self, x, y,L1,L2):
-        #the unit of the hiht is cm.
+        #the unit of the hight is cm.
         self.light_hight = 3000
         self.person_hight = 180
         self.x = x

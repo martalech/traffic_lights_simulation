@@ -28,22 +28,22 @@ class Intensity:
         
     def get_intensity(self, x1,y1,x2,y2):
         
-        distance1_1 = math.sqrt((x1 - self.x)**2 +(y1 - self.y)**2)
+        distance1 = math.sqrt((x1 - self.x)**2 +(y1 - self.y)**2)
         #distance1 = math.sqrt((self.light_hight - self.person_hight)**2 + distance1_1**2)
         
-        distance2_1 = math.sqrt((x2 - self.x)**2 +(y2 - self.y)**2)
+        distance2 = math.sqrt((x2 - self.x)**2 +(y2 - self.y)**2)
         #distance2 = math.sqrt((self.light_hight - self.person_hight)**2 + distance2_1**2)
         
-        light_intensity1  = distance1_1/self.redius * self.L1
-        light_intensity2  = distance2_1/self.redius * self.L2   
+        light_intensity1  = distance1/self.redius * self.L1
+        light_intensity2  = distance2/self.redius * self.L2   
         
         
         #if the person is located within the range of the first light while not in the intersecting area
-        if distance1_1 < self.redius - self.redius_insection:
+        if distance1 < self.redius and distance2 > self.redius:
             self.light_intensity = light_intensity1
             
         #if the person is locatedin the intersectiong area
-        elif distance1_1<self.redius:
+        elif distance1_1<self.redius and distance2 < self.redius:
             self.light_intensity = light_intensity1 + light_intensity2
             
         

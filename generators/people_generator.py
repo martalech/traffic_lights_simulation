@@ -4,7 +4,7 @@ from ui_model.person import Person
 from street_models.street_map import StreetMap
 
 class PeopleGenerator():
-    person_size = 20
+    person_size = 10
 
     @staticmethod
     def generate_person(map: StreetMap):

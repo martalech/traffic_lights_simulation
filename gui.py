@@ -32,7 +32,7 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas, window)
-parse_scenario_to_draw_gui("./example_scenarios/scenario3.txt", draw_gui)
+parse_scenario_to_draw_gui("./example_scenarios/scenario4.txt", draw_gui)
 
 def move():
     draw_gui.tick()

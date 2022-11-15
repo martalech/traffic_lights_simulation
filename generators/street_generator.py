@@ -2,7 +2,7 @@ from ui_model.point import Point
 from ui_model.street import Street
 
 class StreetGenerator():
-    street_width = 110
+    street_width = 70
 
     @staticmethod
     def generate_horizontal_street(start_x, start_y, end_x):

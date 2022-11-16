@@ -11,7 +11,7 @@ class Light():
     def __init__(self, x, y, color='yellow'):
         self.x = x  
         self.y = y
-        self.size = 70
+        self.size = 120
         self.light_no = uuid.uuid4()
         # i think we dont need this
         # self.light_time = 0

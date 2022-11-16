@@ -66,7 +66,7 @@ class DrawOnCanvas:
             l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 2 * 255)
+            alpha = int(l.power / 100 * 255)
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)
@@ -86,7 +86,7 @@ class DrawOnCanvas:
             l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 2 * 255)
+            alpha = int(l.power / 100 * 255)
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)

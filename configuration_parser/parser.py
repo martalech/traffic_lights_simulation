@@ -24,7 +24,7 @@ def parse_people(people_cords, street):
     people = []
     for person_cord in people_cords:
         x, y, speed = person_cord.split(',')
-        people.append(Person(20, Point(int(x), int(y)), street, int(speed)))
+        people.append(Person(10, Point(int(x), int(y)), street, int(speed)))
     return people
 
 

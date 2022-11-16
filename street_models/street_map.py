@@ -25,7 +25,7 @@ class StreetMap():
         if new_people_count >= current_people_count:
             for i in range(new_people_count - current_people_count):
                 point, street = self.find_spawning_spot()
-                self.people.append(Person(20, point, street))
+                self.people.append(Person(10, point, street))
         else:
             indexes = random.sample(range(0, current_people_count), current_people_count - new_people_count)
             for person in sorted(indexes, reverse=True):

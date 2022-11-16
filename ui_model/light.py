@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from ui_model.person import Person
 import math
 import uuid
 

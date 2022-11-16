@@ -94,6 +94,10 @@ class Power_Light(Light):
             df2.to_csv(dir+"/accumulated_energy.csv",index=False)
             df3.to_csv(dir+"/overall.csv",index=False)
 
+    def get_luminance(self):
+        return self.power * 117  # 117 is Luminous efficacy for most streetlights
+
+
 # i think we dont need this
     # def measure_time(self, turn_on):
     #     if turn_on and not self.is_turn_on: # we turn on the lights for the first time

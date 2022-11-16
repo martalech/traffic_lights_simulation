@@ -21,9 +21,9 @@ class Intensity:
         self.L2 = L2
         
         #redius is the range that each lamp can illuminate（circle）
-        self.redius = 2000
+        self.radius = 2000
         #redius_Insection is the intersection part
-        self.redius_insection = 500
+        self.radius_insection = 500
         self.light_intensity = 0
         
     def get_intensity(self, x1,y1,x2,y2):
@@ -34,16 +34,16 @@ class Intensity:
         distance2 = math.sqrt((x2 - self.x)**2 +(y2 - self.y)**2)
         #distance2 = math.sqrt((self.light_hight - self.person_hight)**2 + distance2_1**2)
         
-        light_intensity1  = distance1/self.redius * self.L1
-        light_intensity2  = distance2/self.redius * self.L2   
+        light_intensity1  = (1 - distance1/self.radius) * self.L1
+        light_intensity2  = (1 - distance2/self.radius) * self.L2   
         
         
         #if the person is located within the range of the first light while not in the intersecting area
-        if distance1 < self.redius and distance2 > self.redius:
+        if distance1 < self.radius and distance2 > self.radius:
             self.light_intensity = light_intensity1
             
         #if the person is locatedin the intersectiong area
-        elif distance1_1<self.redius and distance2 < self.redius:
+        elif distance1_1<self.radius and distance2 < self.radius:
             self.light_intensity = light_intensity1 + light_intensity2
             
         

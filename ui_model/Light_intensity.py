@@ -27,7 +27,9 @@ class Intensity:
         self.light_intensity = 0
         
     def get_intensity(self, x1,y1,x2,y2):
-        
+        #(x1,y1) is the coordinates of the Lamp 1
+        #(x2,y2) is the coordinates of the Lamp 2
+
         distance1 = math.sqrt((x1 - self.x)**2 +(y1 - self.y)**2)
         #distance1 = math.sqrt((self.light_hight - self.person_hight)**2 + distance1_1**2)
         
@@ -45,6 +47,10 @@ class Intensity:
         #if the person is locatedin the intersectiong area
         elif distance1_1<self.radius and distance2 < self.radius:
             self.light_intensity = light_intensity1 + light_intensity2
+        
+        #If the person is out of bounds, we assume that the two lights are not illuminating him。
+        else:
+            self.light_intensity = 0
             
         
             

@@ -44,7 +44,7 @@ def select_file():
 
     filename = fd.askopenfilename(
         title='Open a file',
-        initialdir='/',
+        initialdir='./example_scenarios',
         filetypes=filetypes)
     parse_scenario_to_draw_gui(filename, draw_gui)
     if filename is not None:

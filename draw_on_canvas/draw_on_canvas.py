@@ -130,5 +130,6 @@ class DrawOnCanvas:
         self.images = []
 
     def remove_people(self):
-        for person in self.streetmap.people:
-            self.canvas.delete(person.circle)
+        if self.streetmap is not None:
+            for person in self.streetmap.people:
+                self.canvas.delete(person.circle)

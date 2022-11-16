@@ -52,6 +52,7 @@ def parse_scenario_to_draw_gui(filename, draw_gui):
     new_map, new_lights = parse_scenario(filename)
     draw_gui.remove_strets()
     draw_gui.remove_lights()
+    draw_gui.remove_people()
     draw_gui.add_streets(new_map)
     draw_gui.add_lights(new_lights)
     draw_gui.draw_streets()

@@ -1,5 +1,7 @@
 import random
+from math import ceil
 
+from ui_model.person import Person
 from ui_model.point import Point
 from ui_model.street import Street, CrossRoad
 
@@ -7,11 +9,27 @@ from ui_model.street import Street, CrossRoad
 class StreetMap():
     def __init__(self) -> None:
         self.streets = []
+        self.people = []
 
     def add_street(self, new_street: Street):
         for s in self.streets:
             self.calculate_crossroad(new_street, s)
         self.streets.append(new_street)
+
+    def add_people(self, people):
+        self.people.extend(people)
+
+    def adjust_traffic(self, shift_factor):
+        current_people_count = len(self.people)
+        new_people_count = ceil(shift_factor * current_people_count)
+        if new_people_count >= current_people_count:
+            for i in range(new_people_count - current_people_count):
+                point, street = self.find_spawning_spot()
+                self.people.append(Person(10, point, street))
+        else:
+            indexes = random.sample(range(0, current_people_count), current_people_count - new_people_count)
+            for person in sorted(indexes, reverse=True):
+                del self.people[person]
 
     def calculate_crossroad(self, s1: Street, s2: Street):
         isIntersection, p1, p2 = self.check_if_rectangles_intersect(s1, s2)
@@ -59,7 +77,7 @@ class StreetMap():
         else:
             rand = random.Random()
             random_street: Street = self.streets[rand.randint(0, len(self.streets) - 1)]
-            person_offset = PERSON_SIZE # Person must fit inside the street
+            person_offset = PERSON_SIZE  # Person must fit inside the street
             return Point(
                 rand.randint(random_street.start_point.x + person_offset, random_street.end_point.x - person_offset),
                 rand.randint(random_street.start_point.y + person_offset, random_street.end_point.y - person_offset)

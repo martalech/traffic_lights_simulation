@@ -1,5 +1,4 @@
-street:0,250,700,horizontal
-street:300,0,600,vertical
-light:110,110
+street:0,250,700,horizontal:50,300,3;100,300,2
+street:300,0,600,vertical:350,600,1
 light:110,400
 light:350,110

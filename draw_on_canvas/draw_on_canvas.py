@@ -1,40 +1,51 @@
 from time import gmtime
 from typing import List
+
+from model.time import Time
 from street_models.street_map import StreetMap
 from ui_model.light import Light
 from PIL import Image, ImageDraw, ImageTk
 
 class DrawOnCanvas:
 
-    total_light_time = 0
-    temp_string = None
+    # total_light_time = 0
+    # temp_string = None
     def __init__(self, canvas, window) -> None:
         self.canvas = canvas
-        self.streetmap = None
+        self.streetmap: StreetMap = None
         self.lights= []
-        self.people = []
         self.rectangles = []
         self.circles = []
         self.window = window
         self.images = []
+        self.time = Time()
 
     def draw_initial(self):
         self.draw_streets()
         self.draw_lights()
         self.draw_people()
 
+    def tick(self):
+        self.time.tick()
+        shift_factor = self.time.get_shift_factor()
+        if shift_factor != 1:
+            self.remove_people()
+            self.streetmap.adjust_traffic(shift_factor)
+            self.draw_people()
+        self.draw_people_moving()
+        self.update_lights()
+
     def draw_people_moving(self):
-        self.total_light_time = 0
+        # self.total_light_time = 0
         self.move_people()
 
-        for light in self.lights:
-            self.total_light_time += light.light_time
-
+        # for light in self.lights:
+        #     self.total_light_time += light.light_time
         # print("Total light time: " + str((self.total_light_time * 10)) + " seconds")
-        if "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"\
-                != self.temp_string and not None:
-            self.temp_string = "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"
-            print("Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours")
+        # if "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"\
+        #         != self.temp_string and not None:
+        #     self.temp_string = "Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours"
+        #     print("Total energy consumption: " + str((round(self.total_light_time * 10 * 100 / 3600, 2))) + " Watt/hours")
 
     # Street
     def add_streets(self, streetmap: StreetMap):
@@ -52,10 +63,10 @@ class DrawOnCanvas:
 
     def draw_lights(self):
         for i, l in enumerate(self.lights):
-            l.adjust_light(self.people)
+            l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 2 * 255)
+            alpha = int(l.power / 110 * 255)
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)
@@ -72,10 +83,10 @@ class DrawOnCanvas:
 
     def update_lights(self):
         for i, l in enumerate(self.lights):
-            l.adjust_light(self.people)
+            l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 2 * 255)
+            alpha = int(l.power / 110 * 255)
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)
@@ -94,15 +105,8 @@ class DrawOnCanvas:
     def turn_on_the_light(self, light):
         self.canvas.itemconfig(light.light_no, state="normal")
 
-    # Person
-    def add_people(self, people):
-        self.people = people
-
-    def add_person(self, person):
-        self.people.append(person)
-
     def draw_people(self):
-        for person in self.people:
+        for person in self.streetmap.people:
             self.draw_person(person)
         
     def draw_person(self, person):
@@ -110,7 +114,7 @@ class DrawOnCanvas:
         person.circle = self.canvas.create_oval(rect, outline="black", fill="black")
 
     def move_people(self):
-        for person in self.people:
+        for person in self.streetmap.people:
             person.move(self.canvas.winfo_width(), self.canvas.winfo_height())
             self.canvas.move(person.circle, person.move_x, person.move_y)
     
@@ -124,3 +128,8 @@ class DrawOnCanvas:
             self.canvas.delete(circle)
         self.circles = []
         self.images = []
+
+    def remove_people(self):
+        if self.streetmap is not None:
+            for person in self.streetmap.people:
+                self.canvas.delete(person.circle)

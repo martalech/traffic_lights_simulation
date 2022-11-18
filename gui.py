@@ -1,16 +1,8 @@
 import tkinter as tk
-import random
-
-from tkinter.messagebox import Message
-
 
 from draw_on_canvas.draw_on_canvas import DrawOnCanvas
-from street_models.street_map import StreetMap
-from ui_model.person import Person
-from ui_model.light import Light
-from generators.street_generator import StreetGenerator
 from tkinter import filedialog as fd
-from configuration_parser.parser import parse_scenario
+from configuration_parser.parser import parse_scenario_to_draw_gui
 
 # Create window
 
@@ -40,35 +32,24 @@ canvas = tk.Canvas(frame, width=700, height=600, borderwidth=0, highlightthickne
 canvas.pack()
 
 draw_gui = DrawOnCanvas(canvas, window)
-parse_scenario("./example_scenarios/scenario1.txt", draw_gui)
+parse_scenario_to_draw_gui("./example_scenarios/scenario4.txt", draw_gui)
 
 def move():
-    draw_gui.draw_people_moving()
-    draw_gui.update_lights()
+    draw_gui.tick()
     window.after(50, move)
     return
-
-def add_person():
-    point, street = draw_gui.streetmap.find_spawning_spot()
-    person1 = Person(20,  point, street) #TODO : Do not refer to gui static'ish way
-    draw_gui.add_person(person1)
-    draw_gui.draw_person(person1)
-
-B = tk.Button(frame2, text ="Add", command = add_person)
-
-B.pack()
 
 def select_file():
     filetypes = [('text files', '*.txt')]
 
     filename = fd.askopenfilename(
         title='Open a file',
-        initialdir='/',
+        initialdir='./example_scenarios',
         filetypes=filetypes)
-    parse_scenario(filename, draw_gui)
+    parse_scenario_to_draw_gui(filename, draw_gui)
     if filename is not None:
         try:
-            parse_scenario(filename, draw_gui)
+            parse_scenario_to_draw_gui(filename, draw_gui)
         except Exception:
             tk.messagebox.showerror(title='Error', message='Invalid scenario file format')
 

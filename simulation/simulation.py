@@ -1,8 +1,6 @@
 from configuration_parser.parser import parse_scenario
 from generators.people_generator import PeopleGenerator
 from model.time import Time
-import os
-import datetime
 
 
 
@@ -11,6 +9,7 @@ def simulate(people_number, scenario_file_name):
     time.resolution = 1800 # we say that 1 tick is 2 sec
     street_map, lights = parse_scenario(scenario_file_name)
     people = PeopleGenerator.generate_people(people_number, street_map)
+    street_map.remove_people()
     street_map.add_people(people)
     power_consumptions = []
     anxiety = []

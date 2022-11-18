@@ -18,6 +18,13 @@ class StreetMap():
 
     def add_people(self, people):
         self.people.extend(people)
+    
+    def remove_people(self):
+        self.people = []
+
+    def add_lights_to_streets(self, lights):
+        for street in self.streets:
+            street.add_lights(lights)
 
     def adjust_traffic(self, shift_factor):
         current_people_count = len(self.people)

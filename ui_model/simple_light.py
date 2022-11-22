@@ -4,22 +4,6 @@ import sys
 import os
 import pandas as pd
 
-
-'''
-running demo:
-
-for i in range(total_time):
-    for light in power_lights:
-        light.adjust_light(people)
-        light.calculate_energy()
-    for person in people:
-        person.move()
-
-for light in power_lights:
-    dir = "./data/experiment_0"
-    light.output_data(dir)
-'''
-
 # simple intelligent light, turns on when people are in range, turns off otherwise
 class Simple_Light(Light):
 

@@ -1,6 +1,7 @@
 from configuration_parser.parser import parse_scenario
 from generators.people_generator import PeopleGenerator
 from model.time import Time
+from ui_model.power_light import Power_Light
 import os
 import datetime
 
@@ -47,7 +48,9 @@ def simulate(people_number, scenario_file_name):
 
     # output result to data folder
     # default directory name = scenario name + power ratio + time
-    dir = "./data/" + scenario_file_name.split("/")[-1].split(".")[0] +'_'+str(lights[0].ratio)
+    dir = "./data/" + scenario_file_name.split("/")[-1].split(".")[0] 
+    if isinstance(lights[0], Power_Light):
+        dir += '_' + str(lights[0].ratio)
     time_now  = datetime.datetime.now().strftime('_%Y%m%d_%H%M%S') 
     dir = dir + time_now
     if os.path.exists(dir):

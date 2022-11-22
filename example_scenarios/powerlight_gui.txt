@@ -1,0 +1,15 @@
+street:0,245,700,horizontal:50,300,3;100,300,2;200,300,4;250,300,5;300,300,1;350,300,2;400,300,3;450,300,5;500,300,4;550,300,1;600,300,2;650,300,5
+street:150,0,600,vertical:205,50,1;205,100,4;205,150,-2;205,200,2;205,250,5;205,300,2
+street:450,0,600,vertical:505,350,2;505,400,3;505,450,2;505,500,-2;505,550,-5;505,580,2
+street:0,10,700,horizontal
+street:0,520,700,horizontal
+power_light:120,90
+power_light:355,90
+power_light:590,90
+power_light:0,295
+power_light:240,295
+power_light:470,295
+power_light:700,295
+power_light:120,500
+power_light:355,500
+power_light:590,500

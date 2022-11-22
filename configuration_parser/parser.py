@@ -3,6 +3,8 @@ from street_models.street_map import StreetMap
 from ui_model.person import Person
 from ui_model.point import Point
 from ui_model.power_light import Power_Light
+from ui_model.light import Light
+from ui_model.simple_light import Simple_Light
 
 
 def parse_street(street_cords, people_cords, new_map):
@@ -28,11 +30,15 @@ def parse_people(people_cords, street):
     return people
 
 
-def parse_light(values, new_lights):
+def parse_light(values, new_lights, light_type):
     x = int(values[0])
     y = int(values[1])
-    new_lights.append(Power_Light(x, y))
-
+    if light_type == "light":
+        new_lights.append(Light(x, y))
+    elif light_type == "power_light":
+        new_lights.append(Power_Light(x, y))
+    elif light_type == "simple_light":
+        new_lights.append(Simple_Light(x, y))
 
 def parse_setting(setting, new_map, new_lights):
     if setting[0] == "street":
@@ -41,9 +47,9 @@ def parse_setting(setting, new_map, new_lights):
         if len(setting) == 3:
             people = setting[2].strip().split(';')
         parse_street(street, people, new_map)
-    elif setting[0] == "light":
+    elif "light" in setting[0]:
         light = setting[1].strip().split(',')
-        parse_light(light, new_lights)
+        parse_light(light, new_lights, setting[0])
     else:
         raise Exception()
 

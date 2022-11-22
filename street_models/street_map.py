@@ -10,6 +10,7 @@ class StreetMap():
     def __init__(self) -> None:
         self.streets = []
         self.people = []
+        random.seed(10)
 
     def add_street(self, new_street: Street):
         for s in self.streets:

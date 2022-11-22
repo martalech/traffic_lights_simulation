@@ -9,6 +9,7 @@ from ui_model.light_intensity import Intensity
 class Person():
 
     def __init__(self, size, point: Point, street: Street, speed=None, color='black'):
+        random.seed(10)
         self.rand = random.Random()
 
         self.edge_offset = 0  # So that people do not walk next to the edge of the street

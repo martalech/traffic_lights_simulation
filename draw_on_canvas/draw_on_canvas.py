@@ -62,11 +62,11 @@ class DrawOnCanvas:
         self.lights = lights
 
     def draw_lights(self):
-        for i, l in enumerate(self.lights):
+        for l in self.lights:
             l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 110 * 255)
+            alpha = l.calculate_light_gui()
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)
@@ -86,7 +86,7 @@ class DrawOnCanvas:
             l.adjust_light(self.streetmap.people)
             rect = [l.x-l.size, l.y-l.size, l.x+l.size, l.y+l.size]
             
-            alpha = int(l.power / 110 * 255)
+            alpha = l.calculate_light_gui()
             fill = self.window.winfo_rgb("yellow") + (alpha,)
             image = Image.new('RGBA', (700, 600))
             ImageDraw.Draw(image).ellipse(rect, fill=fill)

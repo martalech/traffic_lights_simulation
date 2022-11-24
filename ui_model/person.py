@@ -101,8 +101,10 @@ class Person():
         # pprint.pprint([light.power for light in lights_on_same_street])
         # print(len(lights_on_same_street))
         # print("anxiety_uniformity: " + str(anxiety_uniformity))
-
-        return round(((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance))
+        # print("anxiety_lux: " + str(anxiety_lux))
+        # print("anxiety_tolerance: " + str(self.anxiety_tolerance))
+        # print("Reported anx: " + str(((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance)))
+        return ((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance)
 
     def distance_between_2_points(self, light):
         return math.sqrt(pow((light.x - self.x), 2) + pow((light.y - self.y), 2))

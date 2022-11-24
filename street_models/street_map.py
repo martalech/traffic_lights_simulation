@@ -18,7 +18,7 @@ class StreetMap():
 
     def add_people(self, people):
         self.people.extend(people)
-    
+
     def remove_people(self):
         self.people = []
 

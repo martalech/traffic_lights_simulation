@@ -19,7 +19,7 @@ class Street():
         
     def add_lights(self, lights):
         for light in lights:
-            if self.__is_light_on_the_street(light):
+            if self.is_light_on_the_street(light):
                 self.lights.append(light)
 
     def isPointInCrossrRoad(self, p: Point):
@@ -39,7 +39,7 @@ class Street():
             return self.start_point.y <= p.y and self.end_point.y >= p.y
         return self.start_point.x <= p.x and self.end_point.x >= p.x
 
-    def __is_light_on_the_street(self, light):
+    def is_light_on_the_street(self, light):
 
         if self.IsHorizontal:
             middle_of_the_street =  (self.start_point.y + self.end_point.y)/2
@@ -48,4 +48,3 @@ class Street():
             middle_of_the_street =  (self.start_point.x + self.end_point.x)/2
             distance = abs(light.x-middle_of_the_street)
         return distance < 100
-        

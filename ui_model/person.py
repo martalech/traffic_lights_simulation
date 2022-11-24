@@ -1,4 +1,5 @@
 import math
+import pprint
 import random
 
 from ui_model.point import Point
@@ -70,6 +71,9 @@ class Person():
         # If light level is 100%, then anxiety is 0%, if light-level is 47%, then anxiety is 53%, etc.
         # Maximum possible intensity from 1 light is 100 W * 117 lm/W = 11700 lm
         max_intensity = 11700
+        lights_on_same_street = []
+        anxiety_uniformity = 0
+        light_minimum = 0
 
         lights_sorted_by_distance = sorted(lights, key=self.distance_between_2_points)
 
@@ -77,9 +81,28 @@ class Person():
 
         current_intensity = round(i.get_intensity())
 
-        anxiety = 100 - ((min(current_intensity, max_intensity) / max_intensity) * 100)
+        # 100 is max anxiety and 0 is no anxiety
+        anxiety_lux = 100 - ((min(current_intensity, max_intensity) / max_intensity) * 100)
 
-        return round(anxiety * (1 - self.anxiety_tolerance))
+        for light in lights:
+            if self.street.is_light_on_the_street(light):
+                lights_on_same_street.append(light)
+
+        # if light_minimum is 0 then a light is off on the street. Maybe not relevant
+        # without vertical and horizontal lux calculations
+        # light_minimum = min([light.power for light in lights_on_same_street])
+
+        # anxiety_uniformity is when lights are not the same brightness.
+        # 100 is max anxiety and happens when a light is off; 0 is all lights are equally lit.
+        if sum([light.power for light in lights_on_same_street]) != 0:
+            anxiety_uniformity = 100 - (light_minimum / (
+                        sum([light.power for light in lights_on_same_street]) / len(lights_on_same_street))) * 100
+
+        # pprint.pprint([light.power for light in lights_on_same_street])
+        # print(len(lights_on_same_street))
+        print("anxiety_uniformity: " + str(anxiety_uniformity))
+
+        return round(((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance))
 
     def distance_between_2_points(self, light):
         return math.sqrt(pow((light.x - self.x), 2) + pow((light.y - self.y), 2))

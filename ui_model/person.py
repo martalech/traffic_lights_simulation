@@ -90,7 +90,7 @@ class Person():
 
         # if light_minimum is 0 then a light is off on the street. Maybe not relevant
         # without vertical and horizontal lux calculations
-        # light_minimum = min([light.power for light in lights_on_same_street])
+        light_minimum = min([light.power for light in lights_on_same_street])
 
         # anxiety_uniformity is when lights are not the same brightness.
         # 100 is max anxiety and happens when a light is off; 0 is all lights are equally lit.
@@ -100,7 +100,7 @@ class Person():
 
         # pprint.pprint([light.power for light in lights_on_same_street])
         # print(len(lights_on_same_street))
-        print("anxiety_uniformity: " + str(anxiety_uniformity))
+        # print("anxiety_uniformity: " + str(anxiety_uniformity))
 
         return round(((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance))
 

@@ -25,7 +25,7 @@ class Intensity:
         self.light2_luminance = light2.get_luminance()
 
         # radius is the range that each lamp can illuminate（circle）
-        self.radius = 500
+        self.radius = light1.size
         # radius_Insection is the intersection part
         self.radius_insection = 500
         self.light_intensity = 0

@@ -72,6 +72,6 @@ def parse_scenario(filename) -> tuple[StreetMap, list[Power_Light]]:
         for line in file.readlines():
             setting = line.split(':')
             parse_setting(setting, new_map, new_lights)
-    
+    new_map.add_lights_to_streets(new_lights)
     return new_map, new_lights
 

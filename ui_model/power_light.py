@@ -54,18 +54,3 @@ class Power_Light(Light):
     def calculate_light_gui(self):
         return int(self.power / 110 * 255)
 
-
-# i think we dont need this
-    # def measure_time(self, turn_on):
-    #     if turn_on and not self.is_turn_on: # we turn on the lights for the first time
-    #         self.temp_light_start = datetime.now()
-    #         self.is_turn_on = True
-    #         self.light_time = 0
-    #     elif self.is_turn_on: # we update the light time
-    #         self.temp_light_end = datetime.now()
-    #         self.light_time = self.temp_light_end.timestamp() - self.temp_light_start.timestamp()
-    #     if not turn_on and self.is_turn_on:
-    #         self.temp_light_start = None
-    #         self.temp_light_end = None
-    #         self.is_turn_on = False
-    #     return self.light_time

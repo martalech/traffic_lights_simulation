@@ -13,7 +13,7 @@ people = range(1000, 5001, 100)
 for i in people:
     pow_cons, anx = simulate_number_of_people(filename, resolution,i, True)
     pow_cons_normal_light, anx_normal_light = simulate_number_of_people(filename_normal_lights, resolution,i, True)
-    normal_energy.append(sum([pow_cons_normal_light]))
+    normal_energy.append(sum(pow_cons_normal_light))
     energy.append(sum(pow_cons))
 
 pplot.plot(people, energy, label="Intelligent lights")

@@ -7,18 +7,15 @@ import datetime
 
 
 
-def simulate_number_of_people(people_number, scenario_file_name, resolution):
+def simulate_number_of_people(scenario_file_name, resolution, people_number=10, should_remove_people=False):
     time = Time()
     time.resolution = resolution # we say that 1 tick is 2 sec
-    street_map, lights = parse_scenario(scenario_file_name)
-    people = PeopleGenerator.generate_people(people_number, street_map)
-    street_map.remove_people()
-    street_map.add_people(people)
+    street_map, lights = load_simulation_data(scenario_file_name, should_remove_people, people_number)
     power_consumptions = []
-    anxiety = {}
+    anxiety = []
     try:
         energy = []
-        current_anxiety = {}
+        current_anxiety = []
 
         while True:
             time.tick()
@@ -30,14 +27,8 @@ def simulate_number_of_people(people_number, scenario_file_name, resolution):
                 # save data for previous hour
                 power_consumptions.append(sum(energy) / (time.resolution * 1000) ) # kilo wats per hour
                 energy = []
-                for idx, _ in enumerate(street_map.people):
-                    if idx not in anxiety:
-                        anxiety[idx] = []
-                    if idx in current_anxiety:
-                        anxiety[idx].append(sum(current_anxiety[idx])/time.resolution)  
-                    else:
-                        anxiety[idx].append(0)
-                    current_anxiety = {}
+                anxiety.append(sum(current_anxiety)/time.resolution) 
+                current_anxiety = []
 
             # gather the data for power:
             for l in lights:
@@ -45,25 +36,26 @@ def simulate_number_of_people(people_number, scenario_file_name, resolution):
                 l.calculate_energy()
                 energy.append(l.power) 
             # gather data for anxiety:
-            for idx,p in enumerate(street_map.people):
+            temp_anx = []
+            for p in street_map.people:
                 anx = p.calculate_anxiety(lights)
-                if(idx not in current_anxiety):
-                    # print("if ", anx, idx)
-                    current_anxiety[idx] = []
-                if anx is not  None:
-                    current_anxiety[idx].append(anx)
-                # print(current_anxiety[idx])
+                temp_anx.append(anx)
+            current_anxiety.append(sum(temp_anx)/ len(temp_anx))
                       
     except:
         # handle last hour
-        # print("here")
         power_consumptions.append(sum(energy)/ (time.resolution * 1000))
-        for idx, p in enumerate(street_map.people):
-            if idx not in anxiety:
-                anxiety[idx] = []
-            if idx in current_anxiety:
-                anxiety[idx].append(sum(current_anxiety[idx])/time.resolution)  
-            else:
-                anxiety[idx].append(0)
-    normal_lights = [len(lights)*100/ 1000] * 13
-    return power_consumptions, normal_lights, anxiety
+        anxiety.append(sum(current_anxiety)/time.resolution)  
+          
+
+    return power_consumptions, anxiety
+
+
+def load_simulation_data(scenario_file_name, should_remove_people=False, people_number=10 ):
+    street_map, lights = parse_scenario(scenario_file_name)
+    if should_remove_people:
+        people = PeopleGenerator.generate_people(people_number, street_map)
+        street_map.remove_people()
+        street_map.add_people(people)
+
+    return street_map, lights

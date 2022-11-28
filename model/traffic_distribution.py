@@ -2,22 +2,40 @@ class TrafficDistribution:
     def __init__(self):
         # Key is an hour, value is traffic intensity
         # E.g. at 6pm, there is traffic intensity of 9 (0-10) scale
-        self.distribution = {
-            18: 9,
-            19: 10, # change to 10
-            20: 10,
-            21: 9, # change to 9
-            22: 8,
-            23: 7,
-            0: 9,
-            1: 8,
-            2: 6,
-            3: 4,
+        self.distribution_week_days = {
+            18: 7,
+            19: 6, # change to 10
+            20: 6,
+            21: 7, # change to 9
+            22: 6,
+            23: 4,
+            0: 2,
+            1: 1,
+            2: 1,
+            3: 1,
             4: 1,
-            5: 3,
-            6: 7
+            5: 2,
+            6: 4
+        }
+        self.distribution_weekends = {
+            18: 8,
+            19: 7, # change to 10
+            20: 6,
+            21: 7, # change to 9
+            22: 6,
+            23: 8,
+            0: 7,
+            1: 6,
+            2: 5,
+            3: 4,
+            4: 3,
+            5: 2,
+            6: 2
         }
 
-    def get_intensity(self, hour):
-        return self.distribution[hour]
+    def get_intensity_weekdays(self, hour):
+        return self.distribution_week_days[hour]
+
+    def get_intensity_weekends(self, hour):
+        return self.distribution_weekends[hour]
 

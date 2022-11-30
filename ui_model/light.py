@@ -18,7 +18,7 @@ class Light():
         self.light_no = uuid.uuid4()
         self.power = 0
         self.current_energy = []
-        self.accumulated_energy = []    
+        self.accumulated_energy = []
         # i think we dont need this
         # self.light_time = 0
         # self.is_turn_on = False

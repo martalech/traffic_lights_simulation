@@ -4,6 +4,7 @@ from model.time import Time
 from ui_model.power_light import Power_Light
 import os
 import datetime
+import pandas as pd
 
 
 
@@ -29,7 +30,7 @@ def simulate(people_number, scenario_file_name):
                 # save data for previous hour
                 power_consumptions.append(sum(energy) / (time.resolution * 1000) ) # kilo wats per hour
                 energy = []
-                anxiety.append(sum(current_anxiety)/len(current_anxiety))  
+                anxiety.append(sum (current_anxiety)/len(current_anxiety))  
                 current_anxiety = []
 
             # gather the data for power:
@@ -44,6 +45,15 @@ def simulate(people_number, scenario_file_name):
                       
     except:
         # handle last hour
+        for l in lights:
+            l.adjust_light(street_map.people)
+            l.calculate_energy()
+            energy.append(l.power) 
+        # gather data for anxiety:
+        for p in street_map.people:
+            anx = p.calculate_anxiety(lights)
+            current_anxiety.append(anx)
+
         power_consumptions.append(sum(energy)/ (time.resolution * 1000))
         anxiety.append(sum(current_anxiety)/len(current_anxiety))  
 
@@ -59,6 +69,7 @@ def simulate(people_number, scenario_file_name):
     else:
         for light in lights:
             light.output_data(dir)
+        pd.DataFrame([anxiety]).transpose().to_csv(dir+"/anxiety.csv",index=False,header=False)
 
     return power_consumptions, anxiety
 

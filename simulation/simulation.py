@@ -29,7 +29,9 @@ def simulate_number_of_people(scenario_file_name, resolution, people_number=10, 
                 energy = []
                 anxiety.append(sum(current_anxiety)/time.resolution) 
                 current_anxiety = []
-
+            # move people
+            for p in street_map.people:
+                p.move(1400, 1200)
             # gather the data for power:
             for l in lights:
                 l.adjust_light(street_map.people)

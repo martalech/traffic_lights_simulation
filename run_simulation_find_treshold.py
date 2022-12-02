@@ -5,7 +5,7 @@ from simulation.simulation import simulate_number_of_people
 resolution = 120
 light_system="powerlight_simulation"
 filename =f"./example_scenarios/{light_system}.txt"
-filename_normal_lights = "./example_scenarios/simplelight_simulation.txt"
+filename_normal_lights = "./example_scenarios/light_simulation.txt"
 
 energy = []
 normal_energy=[]

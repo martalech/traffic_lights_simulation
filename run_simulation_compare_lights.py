@@ -3,7 +3,7 @@ import matplotlib.pyplot as pplot
 from simulation.simulation import simulate_number_of_people
 
 hours_lables = ["18", "19", "20", "21", "22", "23", "0", "1" , "2", "3", "4", "5", "6"]
-resolution = 180
+resolution = 1800
 filename_power_light ="./example_scenarios/powerlight_simulation.txt"
 filename_simple_lights = "./example_scenarios/simplelight_simulation.txt"
 filename_lights = "./example_scenarios/light_simulation.txt"
@@ -52,10 +52,12 @@ pplot.savefig(f'energy_{resolution}_compare_systems.png')
 pplot.clf()
 pplot.plot(range(len(anxiety_average_power)),anxiety_average_power, label="Intelligent lights")
 pplot.plot(range(len(anxiety_average_simple)),anxiety_average_simple, label="Simple intelligent lights")
-pplot.plot(range(len(anxiety_average_basic)), energy_average_basic, label="Standard lights")
+pplot.plot(range(len(anxiety_average_basic)), anxiety_average_basic, label="Standard lights")
 pplot.ylim([0, max(anxiety_average_power)+10])
 pplot.xticks(range(len(anxiety_average_power)), hours_lables)
 pplot.xlabel("Hours")
 pplot.ylabel("Anxiety level")
 pplot.legend()
 pplot.savefig(f'anxiety_{resolution}_res_compare_systems.png')
+
+print(sum(energy_average_basic), sum(energy_average_power), sum(energy_average_simple))

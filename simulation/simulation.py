@@ -1,11 +1,6 @@
 from configuration_parser.parser import parse_scenario
 from generators.people_generator import PeopleGenerator
 from model.time import Time
-from ui_model.power_light import Power_Light
-import os
-import datetime
-
-
 
 def simulate_number_of_people(scenario_file_name, resolution, people_number=10, should_remove_people=False):
     time = Time()
@@ -51,7 +46,6 @@ def simulate_number_of_people(scenario_file_name, resolution, people_number=10, 
           
 
     return power_consumptions, anxiety
-
 
 def load_simulation_data(scenario_file_name, should_remove_people=False, people_number=10 ):
     street_map, lights = parse_scenario(scenario_file_name)

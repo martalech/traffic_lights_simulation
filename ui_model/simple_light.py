@@ -1,8 +1,5 @@
 from ui_model.light import Light
-import math
 import sys
-import os
-import pandas as pd
 
 # simple intelligent light, turns on when people are in range, turns off otherwise
 class Simple_Light(Light):

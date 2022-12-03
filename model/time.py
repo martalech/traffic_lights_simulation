@@ -39,6 +39,7 @@ class Time:
     def get_shift_factor(self):
         if self.incrementer == 0 and self.current_hour != self.previous_hour:
             return self.traffic_distribution.get_intensity_weekdays(self.current_hour) / self.traffic_distribution.get_intensity_weekdays(self.previous_hour)
+            # uncomment for weekend
             # return self.traffic_distribution.get_intensity_weekends(self.current_hour) / self.traffic_distribution.get_intensity_weekends(self.previous_hour)
         return 1
 

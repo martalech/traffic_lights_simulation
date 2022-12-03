@@ -36,7 +36,7 @@ energy_average_basic = [sum(sub_list) / len(sub_list) for sub_list in zip(*resul
 
 anxiety_average_power = [sum(sub_list) / len(sub_list) for sub_list in zip(*result_anxiety_pl)]
 anxiety_average_simple = [sum(sub_list) / len(sub_list) for sub_list in zip(*result_anxiety_sl)]
-anxiety_average_basic = [sum(sub_list) / len(sub_list) for sub_list in zip(*result_energy_l)]
+anxiety_average_basic = [sum(sub_list) / len(sub_list) for sub_list in zip(*result_anxiety_l)]
 
  # generate diagrams   
 pplot.plot(range(len(energy_average_power)), energy_average_power, label="Intelligent lights")

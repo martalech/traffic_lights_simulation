@@ -8,8 +8,8 @@ import uuid
 # base light, always turned on
 class Light():
 
-    temp_light_start = None
-    temp_light_end = None
+    #temp_light_start = None
+    #temp_light_end = None
 
     def __init__(self, x, y, color='yellow'):
         self.x = x  

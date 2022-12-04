@@ -4,9 +4,9 @@ class TrafficDistribution:
         # E.g. at 6pm, there is traffic intensity of 9 (0-10) scale
         self.distribution_week_days = {
             18: 7,
-            19: 6, # change to 10
+            19: 6,
             20: 6,
-            21: 7, # change to 9
+            21: 7,
             22: 6,
             23: 4,
             0: 2,
@@ -19,9 +19,9 @@ class TrafficDistribution:
         }
         self.distribution_weekends = {
             18: 8,
-            19: 7, # change to 10
+            19: 7,
             20: 6,
-            21: 7, # change to 9
+            21: 7,
             22: 6,
             23: 8,
             0: 7,

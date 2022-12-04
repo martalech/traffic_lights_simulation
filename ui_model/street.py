@@ -1,9 +1,5 @@
-from typing import List
-import math
-
 from ui_model.point import Point
 from ui_model.crossroad import CrossRoad
-
 
 class Street():
     def __init__(self, start_point:  Point, end_point: Point, isHorizontal) -> None:

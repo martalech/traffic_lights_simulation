@@ -10,7 +10,7 @@ from ui_model.light_intensity import Intensity
 class Person():
 
     def __init__(self, size, point: Point, street: Street, speed=None, color='black'):
-        random.seed(10)
+
         self.rand = random.Random()
 
         self.edge_offset = 0  # So that people do not walk next to the edge of the street
@@ -99,12 +99,6 @@ class Person():
             anxiety_uniformity = 100 - (light_minimum / (
                         sum([light.power for light in lights_on_same_street]) / len(lights_on_same_street))) * 100
 
-        # pprint.pprint([light.power for light in lights_on_same_street])
-        # print(len(lights_on_same_street))
-        # print("anxiety_uniformity: " + str(anxiety_uniformity))
-        # print("anxiety_lux: " + str(anxiety_lux))
-        # print("anxiety_tolerance: " + str(self.anxiety_tolerance))
-        # print("Reported anx: " + str(((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance)))
         return ((anxiety_lux * 0.9) + (anxiety_uniformity * 0.1)) * (1 - self.anxiety_tolerance)
 
     def distance_between_2_points(self, light):

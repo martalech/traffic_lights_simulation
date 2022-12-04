@@ -1,24 +1,5 @@
 from ui_model.light import Light
-import math
 import sys
-import os
-import pandas as pd
-
-
-'''
-running demo:
-
-for i in range(total_time):
-    for light in power_lights:
-        light.adjust_light(people)
-        light.calculate_energy()
-    for person in people:
-        person.move()
-
-for light in power_lights:
-    dir = "./data/experiment_0"
-    light.output_data(dir)
-'''
 
 # intelligent light based on the people's distance
 class Power_Light(Light):

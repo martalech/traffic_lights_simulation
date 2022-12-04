@@ -1,15 +1,10 @@
-from datetime import datetime
 import os
 import pandas as pd
-
 import math
 import uuid
 
 # base light, always turned on
 class Light():
-
-    temp_light_start = None
-    temp_light_end = None
 
     def __init__(self, x, y, color='yellow'):
         self.x = x  
@@ -18,12 +13,16 @@ class Light():
         self.light_no = uuid.uuid4()
         self.power = 0
         self.current_energy = []
+<<<<<<< HEAD
         self.accumulated_energy = []
         # i think we dont need this
         # self.light_time = 0
         # self.is_turn_on = False
         # self.temp_light_start = None
         # self.temp_light_end = None
+=======
+        self.accumulated_energy = []    
+>>>>>>> e2ce4e1670dad1de363f37c1af52efcd35380232
     
     def check_distance(self, x1, y1, x2, y2):
         # return distance between current light bulb and a person
@@ -57,7 +56,6 @@ class Light():
     
     def output_data(self,dir):
         # output data to dir in 3 csv files
-        # dir = "./data/experiment_0"
         if not os.path.exists(dir):
             os.makedirs(dir)
             df1 = pd.DataFrame(data={str(self.x)+'_'+str(self.y)+"_current_energy":self.current_energy})

@@ -1,6 +1,5 @@
 from re import X
 
-
 class Point():
     def __init__(self, x, y) -> None:
         self.x = x

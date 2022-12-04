@@ -8,18 +8,17 @@ import pandas as pd
 
 
 
-def simulate(people_number, scenario_file_name):
+def simulate_number_of_people(scenario_file_name, resolution, people_number=10, should_remove_people=False):
     time = Time()
-    time.resolution = 1800 # we say that 1 tick is 2 sec
-    street_map, lights = parse_scenario(scenario_file_name)
-    people = PeopleGenerator.generate_people(people_number, street_map)
-    street_map.remove_people()
-    street_map.add_people(people)
+    time.resolution = resolution # we say that 1 tick is 2 sec
+    street_map, lights = load_simulation_data(scenario_file_name, should_remove_people, people_number)
     power_consumptions = []
     anxiety = []
+    anxiety_df = {"time":[],"x":[],"y":[],"anx":[]}
     try:
         energy = []
-        current_anxiety= []
+        current_anxiety = []
+
         while True:
             time.tick()
             shift_factor = time.get_shift_factor()
@@ -28,7 +27,7 @@ def simulate(people_number, scenario_file_name):
                 street_map.adjust_traffic(shift_factor)
             if time.current_hour != time.previous_hour and time.incrementer == 0: # change of hour
                 # save data for previous hour
-                power_consumptions.append(sum(energy) / (time.resolution * 1000) ) # kilo wats per hour
+                power_consumptions.append(sum(energy)) 
                 energy = []
                 anxiety.append(sum (current_anxiety)/len(current_anxiety))  
                 current_anxiety = []
@@ -37,11 +36,17 @@ def simulate(people_number, scenario_file_name):
             for l in lights:
                 l.adjust_light(street_map.people)
                 l.calculate_energy()
-                energy.append(l.power) 
+                energy.append((l.power)/(time.resolution * 1000)) # kilo wats per hour
             # gather data for anxiety:
+            temp_anx = []
             for p in street_map.people:
                 anx = p.calculate_anxiety(lights)
-                current_anxiety.append(anx)
+                anxiety_df.get("time").append(time.current_hour)
+                anxiety_df.get("x").append(p.x)
+                anxiety_df.get("y").append(p.y)
+                anxiety_df.get("anx").append(anx)
+                temp_anx.append(anx)
+            current_anxiety.append(sum(temp_anx)/ len(temp_anx))
                       
     except:
         # handle last hour
@@ -52,6 +57,10 @@ def simulate(people_number, scenario_file_name):
         # gather data for anxiety:
         for p in street_map.people:
             anx = p.calculate_anxiety(lights)
+            anxiety_df.get("time").append(time.current_hour)
+            anxiety_df.get("x").append(p.x)
+            anxiety_df.get("y").append(p.y)
+            anxiety_df.get("anx").append(anx)
             current_anxiety.append(anx)
 
         power_consumptions.append(sum(energy)/ (time.resolution * 1000))
@@ -69,7 +78,17 @@ def simulate(people_number, scenario_file_name):
     else:
         for light in lights:
             light.output_data(dir)
-        pd.DataFrame([anxiety]).transpose().to_csv(dir+"/anxiety.csv",index=False,header=False)
+        pd.DataFrame(anxiety_df).to_csv(dir+"/anxiety_detail.csv")
+        pd.DataFrame([anxiety]).transpose().to_csv(dir+"/anxiety_overall.csv",index=True,header=False)
 
     return power_consumptions, anxiety
 
+
+def load_simulation_data(scenario_file_name, should_remove_people=False, people_number=10 ):
+    street_map, lights = parse_scenario(scenario_file_name)
+    if should_remove_people:
+        people = PeopleGenerator.generate_people(people_number, street_map)
+        street_map.remove_people()
+        street_map.add_people(people)
+
+    return street_map, lights
